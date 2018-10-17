@@ -1,3 +1,9 @@
 body {
   margin: 0;
 }
+
+.el-menu-item a {
+  display: flex;
+  text-decoration: none;
+  color: unset;
+}

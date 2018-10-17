@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { Layout } from 'element-react';
-import Left from './component/left.jsx';
+import { Left, Main } from './component'
 
 class App extends Component {
   render () {
     return (
-      <div>
-        <Layout.Row>
-          <Layout.Col span={ 4 }>
-            <Left />
-          </Layout.Col>
-        </Layout.Row>
-      </div>
+      <Layout.Row>
+        <Layout.Col span={ 4 }>
+          <Left 
+            { ...this.props }
+          />
+        </Layout.Col>
+        <Layout.Col span={ 20 }>
+          <Main 
+            { ...this.props }
+          />
+        </Layout.Col>
+      </Layout.Row>
     )
   }
 }

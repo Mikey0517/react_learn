@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu } from 'element-react';
 import menuConfig from '../config/menu.config.js';
 
 class Left extends Component {
-
   renderMenu ( menu, parentKey = "" ) {
     return menu.map( ( item, index ) => {
       let key = parentKey + index;
       let title = (
-          item.icon 
-            ? <span>
-                <i className={ item.icon } />
-                item.title
-              </span>
-            : item.title
+        <span 
+          title={ item.title }
+        >
+          {
+            item.icon 
+            ? <i className={ item.icon } />
+            : null
+          }
+          { item.title }
+        </span>
       );
       if ( item.children ) {
         return (
@@ -31,7 +35,11 @@ class Left extends Component {
             key={ key }
             index={ key }
           >
-            { title }
+            <Link 
+              to={ item.url }
+            >
+              { title }
+            </Link>
           </Menu.Item>
         )
       }
