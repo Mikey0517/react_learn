@@ -1,55 +1,12 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require( 'path' );
-const utils = require('./utils');
+const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
+const merge = require( 'webpack-merge' );
+const baseConfig = require( './webpack.base.config' );
 
 process.env.NODE_ENV = 'development';
 
-let config = {
+let devConfig = {
   mode: process.env.NODE_ENV,
   devtool: '#eval-source-map',
-  entry: {
-    app: [
-      path.join( __dirname, '../src/index.js' )
-    ]
-  },
-  output: {
-    path: path.join( __dirname, './dist/' ),
-    publicPath: "/",
-    filename: "[name].js"
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        include: path.join( __dirname, '../src' ),
-        loader: 'babel-loader',
-        options: {
-          presets: [ 'es2015', 'react' ]
-        }
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 1000,
-          name: utils.assetsPath( 'fonts/[name].[hash:7].[ext]' )
-        }
-      }
-    ]
-  },
   plugins: [
     new HtmlWebpackPlugin( {
       filename: 'index.html',
@@ -59,4 +16,4 @@ let config = {
   ]
 };
 
-module.exports = config;
+module.exports = merge( baseConfig, devConfig );
