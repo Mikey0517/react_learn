@@ -32,4 +32,6 @@ let buildConfig = {
   ]
 };
 
+baseConfig.module.rules[ 1 ].use[ 1 ].options.sourceMap = false;
+
 module.exports = merge( baseConfig, buildConfig );
