@@ -24,18 +24,6 @@ let config = {
         }
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {

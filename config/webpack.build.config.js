@@ -14,9 +14,20 @@ let buildConfig = {
     filename: utils.assetsPath( 'js/[name].[chunkhash].js' ),
     chunkFilename: utils.assetsPath( 'js/[id].[chunkhash].js' )
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract( {
+          fallback: "style-loader",
+          use: "css-loader"
+        } )
+      },
+    ]
+  },
   plugins: [
     new ExtractTextPlugin( {
-      filename: utils.assetsPath( 'css/[name].[contenthash].css' )
+      filename: utils.assetsPath( 'css/[name].css' )
     } ),
     new HtmlWebpackPlugin( {
       filename: config.build.index,
@@ -31,7 +42,5 @@ let buildConfig = {
     } ),
   ]
 };
-
-baseConfig.module.rules[ 1 ].use[ 1 ].options.sourceMap = false;
 
 module.exports = merge( baseConfig, buildConfig );
