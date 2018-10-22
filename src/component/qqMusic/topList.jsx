@@ -25,7 +25,7 @@ class TopList extends Component {
       notice: 0,
       needNewCode: 1,
     };
-    $fetch( url, 'POST', body, ( data ) => {
+    $fetch( true, url, 'POST', body, ( data ) => {
       this.setState( { topList: data.data.topList } )
     } )
   }
@@ -44,6 +44,7 @@ class TopList extends Component {
         {
           topList.map( ( item, i ) => (
             <div
+              key={ i }
               className={ "top-list-item" + ( i === index ? ' active' : '' ) }
             >
               { item.topTitle }

@@ -1,3 +1,4 @@
+const webpack = require( 'webpack' );
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const merge = require( 'webpack-merge' );
 const baseConfig = require( './webpack.base.config' );
@@ -5,7 +6,7 @@ const baseConfig = require( './webpack.base.config' );
 process.env.NODE_ENV = 'development';
 
 let devConfig = {
-  mode: process.env.NODE_ENV,
+  mode: 'development',
   devtool: '#eval-source-map',
   module: {
     rules: [
@@ -28,7 +29,10 @@ let devConfig = {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
-    } )
+    } ),
+    new webpack.DefinePlugin( {
+      'process.env.NODE_ENV': JSON.stringify( process.env.NODE_ENV ),
+   } )
   ]
 };
 

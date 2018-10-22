@@ -8,7 +8,7 @@ const utils = require( './utils' );
 process.env.NODE_ENV = 'production';
 
 let buildConfig = {
-  mode: process.env.NODE_ENV,
+  mode: 'production',
   devtool: '#eval-source-map',
   output: {
     filename: utils.assetsPath( 'js/[name].[chunkhash].js' ),
