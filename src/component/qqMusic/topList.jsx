@@ -19,7 +19,7 @@ class TopList extends Component {
   }
 
   getData () {
-    let url = "/api/v8/fcg-bin/fcg_myqq_toplist.fcg";
+    let url = "/v8/fcg-bin/fcg_myqq_toplist.fcg";
     let body = {
       g_tk: '1928093487',
       notice: 0,
