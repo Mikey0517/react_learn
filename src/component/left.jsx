@@ -48,9 +48,15 @@ class Left extends Component {
 
   render () {
     return (
-      <Menu defaultActive={ menuConfig.defaultActive }>
-        { this.renderMenu( menuConfig.menu ) }
-      </Menu>
+      <div
+        className="x-menu"
+      >
+        <Menu 
+          defaultActive={ menuConfig.defaultActive }
+        >
+          { this.renderMenu( menuConfig.menu ) }
+        </Menu>
+      </div>
     )
   }
 }

@@ -4,9 +4,13 @@ import RouteWithSubRoutes from './routeWithSubRoutes.jsx'
 class Main extends Component {
   render () {
     return (
-      <RouteWithSubRoutes 
-        { ...this.props }
-      />
+      <div
+        className="x-main"
+      >
+        <RouteWithSubRoutes 
+          { ...this.props }
+        />
+      </div>
     )
   }
 }

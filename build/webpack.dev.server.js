@@ -11,6 +11,15 @@ let compiler = webpack( config );
 let server = new webpackDevServer( compiler, {
   hotOnly: true,
   inline: true,
+  proxy: {
+    "/api": {
+      target: "https://c.y.qq.com",
+      pathRewrite: {
+        "^/api": ""
+      },
+      secure: false
+    }
+  }
 } )
 
 server.listen( port )

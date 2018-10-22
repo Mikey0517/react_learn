@@ -1,5 +1,18 @@
-body {
+html, body, #root, .x-index {
+  height: 100%;
   margin: 0;
+}
+
+.x-menu {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  box-shadow: 0 0 10px rgba(100, 100, 128, 0.6);
+}
+
+.x-main {
+  margin-left: 250px;
+  height: 100%;
 }
 
 .el-menu-item a {

@@ -2,8 +2,8 @@ export default {
   defaultActive: '0',
   menu: [
     {
-      title: 'chart',
-      url: '/barChart'
+      title: 'QQ音乐',
+      url: '/qqMusic'
     }
   ]
 }

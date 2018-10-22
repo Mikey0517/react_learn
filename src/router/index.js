@@ -1,9 +1,9 @@
-import BarChart from '../page/barChart.jsx';
+import QqMusic from '../page/qqMusic.jsx';
 
 const router = [
   {
-    path: '/barChart',
-    component: BarChart
+    path: '/qqMusic',
+    component: QqMusic
   }
 ]
 
