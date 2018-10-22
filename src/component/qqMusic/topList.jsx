@@ -25,7 +25,7 @@ class TopList extends Component {
       notice: 0,
       needNewCode: 1,
     };
-    $fetch( true, url, 'POST', body, ( data ) => {
+    $fetch( url, 'POST', body, ( data ) => {
       this.setState( { topList: data.data.topList } )
     } )
   }

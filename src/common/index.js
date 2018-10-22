@@ -5,12 +5,9 @@ const defaultBody = {
   uin: 0,
   platform: 'h5'
 };
-const contextPath = process.env.NODE_ENV === 'development'
-  ? ''
-  : 'https://c.y.qq.com'
 
-const $fetch = ( ifHost, url, method, body, callback ) => {
-  fetch( ifHost ? contextPath + url : url, {
+const $fetch = ( url, method, body, callback ) => {
+  fetch( url, {
     method: method,
     credentials: 'same-origin',
     headers: {
