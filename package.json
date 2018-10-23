@@ -13,6 +13,7 @@
   "dependencies": {
     "element-react": "^1.4.21",
     "element-theme-default": "^1.4.13",
+    "pubsub-js": "^1.7.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1"

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { $fetch } from '../../common';
+import { $fetch, sendEvent } from '../../common';
 
 class TopList extends Component {
   constructor ( props ) {
@@ -26,7 +26,16 @@ class TopList extends Component {
       needNewCode: 1,
     };
     $fetch( url, 'POST', body, ( data ) => {
-      this.setState( { topList: data.data.topList } )
+      this.setState( { topList: data.data.topList }, () => {
+        const { topList, index } = this.state;
+        sendEvent( 'changeList', topList[ index ] )
+      } )
+    } )
+  }
+
+  handleToggle ( index ) {
+    this.setState( { index }, () => {
+      sendEvent( 'changeList', this.state.topList[ index ] )
     } )
   }
 
@@ -46,6 +55,7 @@ class TopList extends Component {
             <div
               key={ i }
               className={ "top-list-item" + ( i === index ? ' active' : '' ) }
+              onClick={ this.handleToggle.bind( this, i ) }
             >
               { item.topTitle }
             </div>

@@ -4,6 +4,30 @@
   background: url( ../image/bg_detail.jpg ) 50% 0 repeat-x;
 }
 
+.qqMusic img.small {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+}
+
+.qqMusic .ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.qqMusic .el-table {
+  border: 0;
+}
+
+.qqMusic .el-table td, .el-table th.is-leaf {
+  border: 0 !important;
+}
+
+.qqMusic .el-table::after, .el-table::before {
+  background-color: unset;
+}
+
 .qqMusic .top-list {
   border: 1px solid rgba(153,153,153,.2);
 }
@@ -29,6 +53,97 @@
   cursor: default;
 }
 
-.qqMusic .top-list .top-list-item:hover {
+.qqMusic .top-list .top-list-item:hover,
+.qqMusic .music-list .music-sing .music-singname:hover {
   color: #31c27c;
+}
+
+.qqMusic .music-main {
+  margin-left: 20px;
+}
+
+.qqMusic .music-main .music-top-title {
+  font-size: 25px;
+  margin: 5px 0 15px 0;
+}
+
+.qqMusic .music-list .music-index {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.qqMusic .music-list .number-list {
+  font-size: 20px;
+  font-weight: 100;
+}
+
+.qqMusic .music-list .number-list.number-top {
+  color: red;
+}
+
+.qqMusic .music-list .music-index .music-log {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.qqMusic .music-list .music-index .music-log .music-up-img {
+  width: 15px;
+  height: 15px;
+  background-position: 0 -60px;
+  background-image: url( '../image/icon_rank.png' );
+}
+
+.qqMusic .music-list .music-index .music-log .music-log-number {
+  color: #999;
+  font-size: 12px;
+}
+
+.qqMusic .music-list .music-sing {
+  display: flex;
+  margin: 5px 0;
+  align-items: center;
+}
+
+.qqMusic .music-list .music-sing .music-singname {
+  font-size: 16px;
+  margin-left: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.qqMusic .music-list .music-sing .music-singdesc {
+  color: #999;
+}
+
+.qqMusic .music-list .music-buttom {
+  line-height: 30px;
+  margin-left: 15px;
+  flex-shrink: 99999;
+  width: 100%;
+}
+
+.qqMusic .music-list .el-table__row .music-buttom .music-play {
+  float: right;
+  width: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.qqMusic .music-list .el-table__row:hover .music-buttom {
+  min-width: 70px;
+}
+
+.qqMusic .music-list .el-table__row:hover .music-buttom .music-play {
+  width: 30px;
+  height: 30px;
+  opacity: 1;
+  background: url( '../image/play.png' );
+  background-size: 100% 100%;
+}
+
+.qqMusic .music-list .el-table__row:hover .music-buttom .music-play:hover {
+  background: url( '../image/play-active.png' );
+  background-size: 100% 100%;
 }

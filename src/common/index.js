@@ -1,3 +1,4 @@
+import pubsub from 'pubsub-js';
 const defaultBody = {
   inCharset: 'utf-8',
   outCharset: 'utf-8',
@@ -48,4 +49,39 @@ const parseParam = ( param, key ) => {
   return paramStr.substr( 1 );  
 };  
 
-export { $fetch };
+const isEqual = ( a, b ) => {
+  // Of course, we can do it use for in
+  // Create arrays of property names
+  let aProps = Object.getOwnPropertyNames(a);
+  let bProps = Object.getOwnPropertyNames(b);
+
+  // If number of properties is different,
+  // objects are not equivalent
+  if ( aProps.length !== bProps.length ) {
+      return false;
+  }
+
+  for ( let i = 0; i < aProps.length; i++ ) {
+      let propName = aProps[ i ];
+
+      // If values of same property are not equal,
+      // objects are not equivalent
+      if ( a[ propName ] !== b[ propName ] ) {
+          return false;
+      }
+  }
+
+  // If we made it this far, objects
+  // are considered equivalent
+  return true;
+};
+
+const sendEvent = ( key, param ) => {
+  pubsub.publish( key, param )
+}
+
+const eventListener = ( key, callback ) => {
+  pubsub.subscribe( key, callback )
+}
+
+export { $fetch, isEqual, sendEvent, eventListener };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout } from 'element-react';
-import { TopList, MusicList } from '../component';
+import { TopList, MusicMain } from '../component';
 import '../assets/css/music.css';
 
 class QqMusic extends Component {
@@ -22,7 +22,9 @@ class QqMusic extends Component {
             md={ { span: 14 } }
             sm={ { span: 18 } }
           >
-            111
+            <MusicMain 
+              id={ 4 }
+            />
           </Layout.Col>
         </Layout.Row>
       </div>
