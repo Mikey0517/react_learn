@@ -94,7 +94,7 @@ class PlayMusic extends Component {
       } else {
         this.setState( { progress: audio.currentTime, nowtime: this.formatTime( audio.currentTime ) } )
       }
-    }, 1000 )
+    }, 500 )
   }
 
   endPlay () {
