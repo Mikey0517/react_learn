@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Layout } from 'element-react';
-import { TopList, MusicMain } from '../component';
+import { TopList, MusicMain, PlayMusic } from '../component';
 import '../assets/css/music.css';
 
 class QqMusic extends Component {
   render () {
     return (
-      <div
-        className="qqMusic"
-      >
+      <div className="qqMusic">
         <Layout.Row>
           <Layout.Col 
             lg={ { span: 4, offset: 3 } }
@@ -27,6 +25,7 @@ class QqMusic extends Component {
             />
           </Layout.Col>
         </Layout.Row>
+        <PlayMusic />
       </div>
     )
   }

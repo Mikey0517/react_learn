@@ -1,6 +1,6 @@
 .qqMusic {
-  height: 100%;
   padding-top: 50px;
+  padding-bottom: 70px;
   background: url( ../image/bg_detail.jpg ) 50% 0 repeat-x;
 }
 
@@ -146,4 +146,94 @@
 .qqMusic .music-list .el-table__row:hover .music-buttom .music-play:hover {
   background: url( '../image/play-active.png' );
   background-size: 100% 100%;
+}
+
+.qqMusic .playMusic {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  left: 250px;
+  right: 0;
+  bottom: 0;
+  background: #31c27c;
+  z-index: 99999;
+}
+
+.qqMusic .music-control {
+  width: 80%;
+}
+
+.qqMusic .music-control .control-button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+}
+
+.qqMusic .music-control .control-button div {
+  cursor: pointer;
+  background-image: url( '../image/play-button.png' )
+}
+
+.qqMusic .music-control .control-button .prev {
+  width: 20px;
+  height: 20px;
+  background-position: 0 -30px;
+}
+
+.qqMusic .music-control .control-button .play {
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  background-position: -30px 0;
+}
+
+.qqMusic .music-control .control-button .pause {
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  background-position: 0 0;
+}
+
+.qqMusic .music-control .control-button .next {
+  width: 20px;
+  height: 20px;
+  background-position: 0 -52px;
+}
+
+.qqMusic .music-control .control-button div.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.qqMusic .music-progress,
+.qqMusic .music-volume {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.qqMusic .music-progress .songname {
+  position: absolute;
+  top: 7px;
+  color: #ffffff;
+}
+
+.qqMusic .music-progress .singtime {
+  position: absolute;
+  top: 10px;
+  color: #ffffff;
+  right: 0;
+  font-size: 14px;
+}
+
+.qqMusic .music-volume .volume {
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  background-image: url( '../image/play-button.png' );
+  background-position: 0 -141px;
+  margin-right: 10px;
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Tag, Pagination } from 'element-react';
-import { $fetch, isEqual } from '../../common';
+import { $fetch, isEqual, sendEvent, eventListener } from '../../common';
 import MusicImg from './musicImg.jsx';
 
 let url = {
@@ -11,9 +11,9 @@ class MusicList extends Component {
   constructor ( props ) {
     super( props );
     this.state = {
-      index: 0,
+      pageIndex: 0,
       pageSize: 10,
-      data: [],
+      data: null,
     };
   }  
 
@@ -28,7 +28,7 @@ class MusicList extends Component {
   }
 
   getData ( props ) {
-    const { pageSize, index } = this.state;
+    const { pageSize, pageIndex } = this.state;
     const { id } = props;
     let body = {
       topid: id,
@@ -38,7 +38,7 @@ class MusicList extends Component {
       g_tk: '1928093487',
       notice: 0,
       needNewCode: 1,
-      song_begin: index * pageSize,
+      song_begin: pageIndex * pageSize,
       song_num: pageSize
     };
     $fetch( url.fcg_v8_toplist_cp, 'POST', body, ( data ) => {
@@ -47,9 +47,13 @@ class MusicList extends Component {
   }
 
   handleTogglePage ( index ) {
-    this.setState( { index: index - 1 }, () => {
+    this.setState( { pageIndex: index - 1 }, () => {
       this.getData( this.props )
     } )
+  }
+
+  handlePlay ( row ) {
+    sendEvent( 'playMusic', row );
   }
 
   dealZero ( number ) {
@@ -57,16 +61,18 @@ class MusicList extends Component {
   }
 
   render () {
-    const { data, pageSize, index } = this.state;
+    const { data, pageSize, pageIndex } = this.state;
+    if ( !data ) return null;
     let columns = [
       {
         label: '',
         width: '150px',
         render: ( row, column, rowKey ) => {
+          let index = rowKey + pageIndex * pageSize + 1;
           return (
             <div className="music-index">
-              <div className={ "number-list" + ( rowKey < 3 ? ' number-top' : '' ) }>
-                { rowKey + 1 + index * pageSize }
+              <div className={ "number-list" + ( index < 4 ? ' number-top' : '' ) }>
+                { index }
               </div>
               <div className="music-log">
                 <div className="music-up-img" />
@@ -79,7 +85,7 @@ class MusicList extends Component {
       {
         label: '歌曲',
         minWidth: '350px',
-        render: ( row ) => {
+        render: ( row, column, rowKey ) => {
           const data = row.data;
           return (
             <div className="music-sing">
@@ -88,7 +94,7 @@ class MusicList extends Component {
               { data.albumdesc !== "" ? <div className="music-singdesc ellipsis">{ data.albumdesc }</div> : null }
               <div className="music-buttom">
                 { data.isonly === 1 ? <Tag type="success">独家</Tag> : null }
-                <div className="music-play" title="播放" />
+                <div className="music-play" title="播放" onClick={ this.handlePlay.bind( this, data, rowKey ) } />
               </div>
             </div>
           )

@@ -1,0 +1,12 @@
+.progress {
+  height: 3px;
+  width: 100%;
+  background: rgba(255,255,255,0.6);
+  cursor: pointer;
+}
+
+.progress .progress-iner {
+  height: 100%;
+  width: 0;
+  background: rgba(255,255,255,1);
+}
