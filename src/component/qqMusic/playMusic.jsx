@@ -20,6 +20,7 @@ class PlayMusic extends Component {
       singtime: '00:00',
       nowtime: '00:00'
     };
+    this.interval = null;
   }
 
   componentWillMount () {
@@ -49,7 +50,7 @@ class PlayMusic extends Component {
       case 'pause':
         this.setState( { status: cmd }, () => {
           audio.pause();
-          if ( this.interval ) clearInterval( this.interval );
+          if ( this.interval !== null ) clearInterval( this.interval );
         } );
         break;
       case 'prev': 
