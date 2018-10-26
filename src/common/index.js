@@ -84,4 +84,11 @@ const eventListener = ( key, callback ) => {
   pubsub.subscribe( key, callback )
 }
 
-export { $fetch, isEqual, sendEvent, eventListener };
+const uuid = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, ( c ) => {
+    let r = Math.random() * 16 | 0, v = c === 'x' ? r : ( r&0x3|0x8 );
+    return v.toString( 16 );
+  });
+}
+
+export { $fetch, isEqual, sendEvent, eventListener, uuid };

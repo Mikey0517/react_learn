@@ -17,17 +17,36 @@ class PlayMusic extends Component {
       music: null,
       progress: 0,
       volume: 0.5,
-      singtime: '00:00',
       nowtime: '00:00'
     };
     this.interval = null;
+    this.musics = { lastIndex: -1, sort: [], list: {} };
   }
 
   componentWillMount () {
     eventListener( 'playMusic', ( key, param ) => {
-      this.setState( { music: param, progress: 0, singtime: this.formatTime( param.interval ) }, () => {
-        this.handleControl( 'play' );
+      if ( !this.musics.list[ '_' + param.songmid ] ) {
+        this.musics.sort.push( '_' + param.songmid );
+        this.musics.list[ '_' + param.songmid ] = param;
+        this.musics.lastIndex =  this.musics.sort.length - 1;
+      } else {
+        this.musics.lastIndex = this.musics.sort.indexOf( '_' + param.songmid );
+      }
+      localStorage.setItem( 'musics', JSON.stringify( this.musics ) );
+      this.initData( () => {
+        this.handleControl( 'play', true );
       } )
+    } );
+    if ( localStorage.hasOwnProperty( 'musics' ) ) {
+      this.musics = JSON.parse( localStorage.getItem( 'musics' ) );
+      this.initData();
+    }
+  }
+
+  initData ( callback ) {
+    const { lastIndex, sort, list } = this.musics;
+    this.setState( { music: list[ sort[ lastIndex ] ], prev: lastIndex > 0 || false, next: ( lastIndex < sort.length - 1 && lastIndex > -1 ) || false }, () => {
+      if ( callback ) callback();
     } )
   }
 
@@ -38,10 +57,13 @@ class PlayMusic extends Component {
   handleControl ( cmd, param ) {
     const { audio } = this.refs;
     const { music, volume } = this.state;
+    const { lastIndex, sort } = this.musics;
     switch ( cmd ) {
       case 'play':
         if ( !music ) return false;
-        this.setState( { status: cmd }, () => {
+        let obj = { status: cmd };
+        if ( param ) obj.progress = 0;
+        this.setState( obj, () => {
           audio.volume = volume;
           audio.play();
           this.listenerAudio();
@@ -54,9 +76,13 @@ class PlayMusic extends Component {
         } );
         break;
       case 'prev': 
+        this.musics.lastIndex--;
       case 'next':
-        if ( this.state[ cmd ] ) return false;
-        sendEvent( 'toggleMusic', { type: cmd } );
+        if ( cmd === 'next' ) this.musics.lastIndex++;
+        localStorage.setItem( 'musics', JSON.stringify( this.musics ) );
+        this.initData( () => {
+          this.handleControl( 'play', true );
+        } );
         break;
       case 'progress':
         audio.currentTime = param;
@@ -65,6 +91,14 @@ class PlayMusic extends Component {
         this.setState( { volume: param }, () => {
           audio.volume = param;
         } )
+        break;
+      case 'end': 
+        this.handleControl( 'pause' );
+        this.setState( { progress: 0, nowtime: '00:00' }, () => {
+          if ( lastIndex < sort.length - 1 ) {
+            this.handleControl( 'next' );
+          }
+        } );
     }
   }
 
@@ -79,6 +113,7 @@ class PlayMusic extends Component {
   }
 
   listenerAudio () {
+    if ( this.interval !== null ) clearInterval( this.interval );
     const { audio } = this.refs;
     this.interval = setInterval( () => {
       if ( audio.error ) {
@@ -86,24 +121,19 @@ class PlayMusic extends Component {
           title: '错误',
           message: '播放错误'
         } );
-        this.endPlay();
+        this.handleControl( 'end' );
         return false;
       }
       if ( audio.ended ) {
-        this.endPlay();
+        this.handleControl( 'end' );
       } else {
         this.setState( { progress: audio.currentTime, nowtime: this.formatTime( audio.currentTime ) } )
       }
     }, 500 )
   }
 
-  endPlay () {
-    this.handleControl( 'pause' );
-    this.setState( { progress: 0, nowtime: '00:00' } );
-  }
-
   render () {
-    const { status, prev, next, music, progress, volume, singtime, nowtime } = this.state;
+    const { status, prev, next, music, progress, volume, nowtime } = this.state;
     return (
       <div className="playMusic">
         <audio ref="audio" src={ music ? this.getMusicUrl( music.songmid ) : null } />
@@ -123,7 +153,7 @@ class PlayMusic extends Component {
             >
               <div className="music-progress">
                 <div className="songname">{ music ? music.songname : '' }</div>
-                <div className="singtime">{ nowtime + ' / ' + singtime }</div>
+                <div className="singtime">{ nowtime + ' / ' + ( music ? this.formatTime( music.interval ) : '00:00' ) }</div>
                 <Progress 
                   numerator={ progress }
                   denominator={ music ? music.interval : 0 }
