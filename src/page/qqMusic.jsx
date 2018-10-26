@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout } from 'element-react';
-import { TopList, MusicMain, PlayMusic } from '../component';
+import { TopList, MusicMain, PlayMusic, PlayList } from '../component';
 import '../assets/css/music.css';
 
 class QqMusic extends Component {
@@ -25,6 +25,7 @@ class QqMusic extends Component {
             />
           </Layout.Col>
         </Layout.Row>
+        <PlayList />
         <PlayMusic />
       </div>
     )

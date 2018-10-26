@@ -151,7 +151,7 @@
 .qqMusic .playMusic {
   position: fixed;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   left: 250px;
   right: 0;
   bottom: 0;
@@ -160,7 +160,7 @@
 }
 
 .qqMusic .music-control {
-  width: 80%;
+  width: 90%;
 }
 
 .qqMusic .music-control .control-button {
@@ -207,7 +207,8 @@
 }
 
 .qqMusic .music-progress,
-.qqMusic .music-volume {
+.qqMusic .music-volume,
+.qqMusic .play-list-button {
   position: relative;
   display: flex;
   height: 100%;
@@ -236,4 +237,60 @@
   background-image: url( '../image/play-button.png' );
   background-position: 0 -141px;
   margin-right: 10px;
+}
+
+.qqMusic .play-list-button .list {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url( '../image/music-list.png' );
+  background-size: 100% 100%;
+  margin-left: 20px;
+}
+
+.qqMusic .playList {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background: #ffffff;
+  z-index: 90000;
+}
+
+.qqMusic .playList .list-top {
+  padding: 15px;
+  background: #31c27c;
+  font-size: 14px;
+}
+
+.qqMusic .playList .list-top .list-title {
+  line-height: 30px;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.qqMusic .playList .list-top .list-number {
+
+}
+.qqMusic .playList .list-top .list-clear {
+  cursor: pointer;
+}
+
+.qqMusic .playList .list-content {
+  padding: 15px;
+}
+
+.qqMusic .playList .list-content .list-item {
+  display: flex;
+}
+
+.qqMusic .playList .list-content .list-item .song-introduce {
+  overflow: hidden;
+}
+
+.qqMusic .playList .list-content .list-item .songtime {
+  display: flex;
+  align-items: flex-end;
+  flex-shrink: 0;
 }

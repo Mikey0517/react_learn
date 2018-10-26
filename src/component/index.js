@@ -6,6 +6,7 @@ import RouteWithSubRoutes from './routeWithSubRoutes.jsx';
 import TopList from './qqMusic/topList.jsx';
 import MusicMain from './qqMusic/musicMain.jsx';
 import PlayMusic from './qqMusic/playMusic.jsx';
+import PlayList from './qqMusic/playList.jsx';
 
 export { 
   Head, 
@@ -14,5 +15,6 @@ export {
   RouteWithSubRoutes ,
   TopList,
   MusicMain,
-  PlayMusic
+  PlayMusic,
+  PlayList
 };

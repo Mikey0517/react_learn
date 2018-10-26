@@ -149,7 +149,7 @@ class PlayMusic extends Component {
               </div>
             </Layout.Col>
             <Layout.Col
-              lg={ { span: 16 } }
+              lg={ { span: 15 } }
             >
               <div className="music-progress">
                 <div className="songname">{ music ? music.songname : '' }</div>
@@ -162,7 +162,7 @@ class PlayMusic extends Component {
               </div>
             </Layout.Col>
             <Layout.Col
-              lg={ { span: 4 } }
+              lg={ { span: 3 } }
             >
               <div className="music-volume">
                 <div className="volume"/>
@@ -174,6 +174,13 @@ class PlayMusic extends Component {
                     return Math.round( value * 100 )
                   } }
                 />
+              </div>
+            </Layout.Col>
+            <Layout.Col
+              lg={ { span: 2 } }
+            >
+              <div className="play-list-button">
+                <div className="list" />
               </div>
             </Layout.Col>
           </Layout.Row>
