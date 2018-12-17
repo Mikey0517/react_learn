@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import RouteWithSubRoutes from './routeWithSubRoutes.jsx'
 
 class Main extends Component {
   render () {
@@ -7,9 +6,7 @@ class Main extends Component {
       <div
         className="x-main"
       >
-        <RouteWithSubRoutes 
-          { ...this.props }
-        />
+        { this.props.children }
       </div>
     )
   }

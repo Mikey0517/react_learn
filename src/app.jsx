@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import { Left, Main } from './component'
+import RouteWithSubRoutes from './component/routeWithSubRoutes'
 
 class App extends Component {
   render () {
     return (
-      <div
-        className="x-index"
-      >
-        <Left 
-          { ...this.props }
-        />
-        <Main 
-          { ...this.props }
-        />
-      </div>
+      <RouteWithSubRoutes { ...this.props } />
     )
   }
 }

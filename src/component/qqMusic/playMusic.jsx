@@ -43,6 +43,10 @@ class PlayMusic extends Component {
     }
   }
 
+  componentWillUnmount () {
+    if ( this.interval ) clearInterval( this.interval );
+  }
+
   initData ( callback ) {
     const { lastIndex, sort, list } = this.musics;
     this.setState( { music: list[ sort[ lastIndex ] ], prev: lastIndex > 0 || false, next: ( lastIndex < sort.length - 1 && lastIndex > -1 ) || false }, () => {

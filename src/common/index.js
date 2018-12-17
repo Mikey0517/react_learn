@@ -12,11 +12,11 @@ const $fetch = ( url, method, body, callback ) => {
     method: method,
     credentials: 'same-origin',
     headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: method === 'POST'
       ? parseParam( Object.assign( {}, defaultBody, body ) )
-      : null
+      : null,
   } )
   .then( resp => {
     if ( resp.ok ) {
@@ -32,6 +32,9 @@ const $fetch = ( url, method, body, callback ) => {
   } )
   .then( data => {
     callback( data );
+  } )
+  .catch( ( e ) => {
+    reports.textContent = 'Download error: ' + e.message;
   } );
 }
 
