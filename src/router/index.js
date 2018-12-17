@@ -1,8 +1,8 @@
-import QqMusic from '../page/qqMusic.jsx';
+import QqMusic from '../page/qq-music';
 
 const router = [
   {
-    path: '/qqMusic',
+    path: '/qq-music',
     component: QqMusic
   }
 ]

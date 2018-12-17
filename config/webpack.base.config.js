@@ -12,6 +12,7 @@ let config = {
     publicPath: "/",
     filename: "[name].js"
   },
+  resolve: { extensions: [ '.js', '.jsx' ] },
   module: {
     rules: [
       {

@@ -3,7 +3,7 @@ export default {
   menu: [
     {
       title: 'QQ音乐',
-      url: '/qqMusic'
+      url: '/qq-music'
     }
   ]
 }
