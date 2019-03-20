@@ -18,6 +18,7 @@ class MusicList extends Component {
   }  
 
   componentWillMount () {
+    this._isMounted = true;
     this.getData( this.props );
   }
 
@@ -25,6 +26,10 @@ class MusicList extends Component {
     if ( !isEqual( this.props, nextProps ) ) {
       this.getData( nextProps );
     }
+  }
+
+  componentWillUnmount () {
+    this._isMounted = false;
   }
 
   getData ( props ) {
@@ -42,7 +47,9 @@ class MusicList extends Component {
       song_num: pageSize
     };
     $fetch( url.fcg_v8_toplist_cp, 'POST', body, ( data ) => {
-      this.setState( { data } )
+      if ( this._isMounted ) {
+        this.setState( { data } )
+      }
     } )
   }
 

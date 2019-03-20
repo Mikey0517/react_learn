@@ -32,9 +32,6 @@ const $fetch = ( url, method, body, callback ) => {
   } )
   .then( data => {
     callback( data );
-  } )
-  .catch( ( e ) => {
-    reports.textContent = 'Download error: ' + e.message;
   } );
 }
 

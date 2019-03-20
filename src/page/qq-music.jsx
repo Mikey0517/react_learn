@@ -15,7 +15,7 @@ class QqMusic extends Component {
               md={ { span: 4, offset: 3 } }
               sm={ { span: 6 } }
             >
-              <TopList />
+              <TopList { ...this.props } />
             </Layout.Col>
             <Layout.Col 
               lg={ { span: 14 } }

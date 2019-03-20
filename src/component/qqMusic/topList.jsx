@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { $fetch, sendEvent } from '../../common';
+import { $fetch, sendEvent, eventListener } from '../../common';
 
 class TopList extends Component {
   constructor ( props ) {
@@ -11,11 +11,16 @@ class TopList extends Component {
   }  
 
   componentWillMount () {
+    this._isMounted = true;
     this.getData();
   }
 
   componentWillReceiveProps () {
     this.getData();
+  }
+
+  componentWillUnmount () {
+    this._isMounted = false;
   }
 
   getData () {
@@ -26,10 +31,12 @@ class TopList extends Component {
       needNewCode: 1,
     };
     $fetch( url, 'POST', body, ( data ) => {
-      this.setState( { topList: data.data.topList }, () => {
-        const { topList, index } = this.state;
-        sendEvent( 'changeList', topList[ index ] )
-      } )
+      if ( this._isMounted ) {
+        this.setState( { topList: data.data.topList }, () => {
+          const { topList, index } = this.state;
+          sendEvent( 'changeList', topList[ index ] )
+        } )
+      }
     } )
   }
 
