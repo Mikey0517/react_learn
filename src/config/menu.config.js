@@ -4,7 +4,7 @@ export default {
     title: 'QQ音乐',
     url: '/music'
   }, {
-    title: '测试',
-    url: '/ceshi'
+    title: '匿名聊天',
+    url: '/chat'
   } ]
 }

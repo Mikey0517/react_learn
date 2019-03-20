@@ -1,12 +1,12 @@
 import Music from '../page/music';
-import ceshi from '../page/ceshi';
+import chat from '../page/chat';
 
 const router = [ {
   path: '/music',
   component: Music
 }, {
-  path: '/ceshi',
-  component: ceshi
+  path: '/chat',
+  component: chat
 } ]
 
 export default router;
