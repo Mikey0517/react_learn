@@ -1,9 +1,9 @@
-import QqMusic from '../page/qq-music';
+import Music from '../page/music';
 import ceshi from '../page/ceshi';
 
 const router = [ {
-  path: '/qq-music',
-  component: QqMusic
+  path: '/music',
+  component: Music
 }, {
   path: '/ceshi',
   component: ceshi

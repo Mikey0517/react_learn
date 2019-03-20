@@ -4,7 +4,7 @@ import { Layout } from 'element-react';
 import { TopList, MusicMain, PlayMusic, PlayList } from '../component';
 import '../assets/css/music.css';
 
-class QqMusic extends Component {
+class Music extends Component {
   render () {
     return (
       <DefaultLayout { ...this.props }>
@@ -35,4 +35,4 @@ class QqMusic extends Component {
   }
 }
 
-export default QqMusic;
+export default Music;

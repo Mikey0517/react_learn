@@ -4,7 +4,7 @@ import Progress from './progress.jsx';
 import { eventListener, sendEvent } from '../../common';
 
 const url = {
-  play: "http://ws.stream.qqmusic.qq.com/C100"
+  play: "https://api.bzqll.com/music/tencent/url"
 }
 
 class PlayMusic extends Component {
@@ -55,7 +55,7 @@ class PlayMusic extends Component {
   }
 
   getMusicUrl ( id ) {
-    return url.play + id + ".m4a?fromtag=0&guid=126548448";
+    return url.play + "?key=579621905&id=" + id + "&br=320";
   }
 
   handleControl ( cmd, param ) {
