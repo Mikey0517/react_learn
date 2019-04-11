@@ -2,10 +2,10 @@ const fs = require( 'fs' );
 const webpack = require( 'webpack' );
 const config = require( '../config/webpack.build.config' );
 
-console.log( 'clear old build...' );
+console.log( 'clear old build...\n' );
 deleteFolder( config.output.path );
 
-console.log( 'building for production...' );
+console.log( 'building for production...\n' );
 webpack( config, ( err, stats ) => {
   if ( err ) throw err;
 
@@ -14,7 +14,8 @@ webpack( config, ( err, stats ) => {
     modules: false,
     children: false,
     chunks: false,
-    chunkModules: false
+    chunkModules: false,
+    warnings: false
   } ) + '\n\n' )
 
   if ( stats.hasErrors() ) {
@@ -34,7 +35,7 @@ function deleteFolder( path ) {
         } else { // delete file
             fs.unlinkSync( curPath );
         }
-    });
+    } );
     fs.rmdirSync( path );
   }
 }

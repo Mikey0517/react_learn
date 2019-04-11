@@ -5,11 +5,9 @@ const baseConfig = require( './webpack.base.config' );
 const config = require( '../config/config.js' );
 const utils = require( './utils' );
 
-process.env.NODE_ENV = 'production';
+const mode = 'production';
 
 let buildConfig = {
-  mode: 'production',
-  devtool: '#eval-source-map',
   output: {
     filename: utils.assetsPath( 'js/[name].[chunkhash].js' ),
     chunkFilename: utils.assetsPath( 'js/[id].[chunkhash].js' )
@@ -27,7 +25,7 @@ let buildConfig = {
   },
   plugins: [
     new ExtractTextPlugin( {
-      filename: utils.assetsPath( 'css/[name].css' )
+      filename: utils.assetsPath( 'css/[name].[chunkhash].css' )
     } ),
     new HtmlWebpackPlugin( {
       filename: config.build.index,
@@ -43,4 +41,4 @@ let buildConfig = {
   ]
 };
 
-module.exports = merge( baseConfig, buildConfig );
+module.exports = merge( baseConfig( mode ), buildConfig );

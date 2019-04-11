@@ -1,12 +1,16 @@
 import Music from '../page/music';
-import chat from '../page/chat';
+import Chat from '../page/chat';
 
 const router = [ {
+  path: '/',
+  component: Music,
+  exact: true
+}, {
   path: '/music',
   component: Music
 }, {
   path: '/chat',
-  component: chat
+  component: Chat
 } ]
 
 export default router;

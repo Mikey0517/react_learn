@@ -1,35 +1,30 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import routes from '../router';
+
+const supportsHistory = 'pushState' in window.history;
 
 class RouteWithSubRoutes extends Component {
   render () {
     return (
-      [
-        <Route
-          key={ -1 }
-          path={ '/' }
-          exact
-          render={ ( props ) => (
-            <Redirect
-              to={ {
-                pathname: routes[ 0 ].path,
-                state: { from: props.location }
-              } }
-            />
-          ) }
-        />
-      ].concat( 
-        routes.map( ( route, index ) => {
-          return (
-            <Route 
-              key={ index }
-              path={ route.path }
-              component={ route.component }
-            />
-          )
-        } )
-      )
+      <BrowserRouter
+        basename={ '/' }
+        forceRefresh={ !supportsHistory }
+        keyLength={ 12 }
+      >
+        <div>
+          {
+            routes.map( ( route, index ) => (
+              <Route 
+                key={ index }
+                path={ route.path }
+                exact={ route.exact ? route.exact : false }
+                component={ route.component }
+              />
+            ) )
+          }
+        </div>
+      </BrowserRouter>
     )
   }
 }

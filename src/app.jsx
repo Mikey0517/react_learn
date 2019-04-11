@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import RouteWithSubRoutes from './component/routeWithSubRoutes'
+import RouteWithSubRoutes from './component/routeWithSubRoutes';
 
 class App extends Component {
   render () {
     return (
-      <RouteWithSubRoutes { ...this.props } />
+      <RouteWithSubRoutes />
     )
   }
 }
