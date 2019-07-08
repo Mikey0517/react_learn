@@ -3,7 +3,7 @@
 veid='1156620';
 api_key='private_Quglk2MKwmgnTdO5nUMbka0y';
 ToLocation='USCA_8';
-Timeout='550';
+Timeout='2000';
 
 # START
 [[ -n "$veid" ]] || exit 1
