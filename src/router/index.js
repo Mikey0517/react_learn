@@ -1,5 +1,6 @@
 import Music from '../page/music';
 import Chat from '../page/chat';
+import MineSweeping from '../page/mineSweeping';
 
 const router = [ {
   path: '/',
@@ -11,6 +12,9 @@ const router = [ {
 }, {
   path: '/chat',
   component: Chat
+}, {
+  path: '/mineSweeping',
+  component: MineSweeping
 } ]
 
 export default router;

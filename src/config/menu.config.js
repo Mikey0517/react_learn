@@ -6,5 +6,8 @@ export default {
   }, {
     title: '匿名聊天',
     url: '/chat'
+  }, {
+    title: '扫雷',
+    url: '/mineSweeping'
   } ]
 }

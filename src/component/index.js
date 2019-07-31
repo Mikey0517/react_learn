@@ -8,6 +8,8 @@ import MusicMain from './qqMusic/musicMain.jsx';
 import PlayMusic from './qqMusic/playMusic.jsx';
 import PlayList from './qqMusic/playList.jsx';
 
+import MineSweepingPanel from './mineSweeping/panel';
+
 export { 
   Head, 
   Left, 
@@ -16,5 +18,6 @@ export {
   TopList,
   MusicMain,
   PlayMusic,
-  PlayList
+  PlayList,
+  MineSweepingPanel
 };
