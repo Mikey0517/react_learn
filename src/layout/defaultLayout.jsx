@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Left, Main } from '../component';
 
-class DefalutLayout extends Component {
+class DefaultLayout extends Component {
   render () {
     return (
       <div className="x-index">
@@ -12,4 +12,4 @@ class DefalutLayout extends Component {
   }
 }
 
-export default DefalutLayout;
+export default DefaultLayout;

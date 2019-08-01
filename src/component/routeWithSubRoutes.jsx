@@ -15,7 +15,7 @@ class RouteWithSubRoutes extends Component {
         <div>
           {
             routes.map( ( route, index ) => (
-              <Route 
+              <Route
                 key={ index }
                 path={ route.path }
                 exact={ route.exact ? route.exact : false }

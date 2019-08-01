@@ -1,4 +1,4 @@
-html, body, #root, .x-index {
+html, body, #root, #root>div, .x-index {
   height: 100%;
   margin: 0;
 }
@@ -11,8 +11,10 @@ html, body, #root, .x-index {
 }
 
 .x-main {
-  margin-left: 250px;
+  padding-left: 250px;
   height: 100%;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .el-menu-item a {
