@@ -8,6 +8,7 @@ html, body, #root, #root>div, .x-index {
   height: 100%;
   width: 250px;
   box-shadow: 0 0 10px rgba(100, 100, 128, 0.6);
+  z-index: 1000;
 }
 
 .x-main {
