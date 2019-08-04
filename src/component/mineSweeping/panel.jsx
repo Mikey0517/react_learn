@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Message } from 'element-react';
 
 class MineItem extends Component {
   constructor ( props ) {
@@ -10,7 +11,7 @@ class MineItem extends Component {
   }
 
   render () {
-    const { onClick, onContextMenu, status } = this.props;
+    const { onClick, onContextMenu, onMouseUp, status } = this.props;
     let className = 'col';
     let html = '';
     if ( typeof status !== 'undefined' ) {
@@ -34,6 +35,7 @@ class MineItem extends Component {
         className={ className }
         onClick={ onClick }
         onContextMenu={ onContextMenu }
+        onMouseUp={ onMouseUp }
         dangerouslySetInnerHTML={ { __html: html } }
       />
     )
@@ -52,20 +54,51 @@ class Panel extends Component {
         xLength: 9,
         yLength: 9,
         mine: 10
+      },
+      middle: {
+        xLength: 16,
+        yLength: 16,
+        mine: 40
+      },
+      senior: {
+        xLength: 30,
+        yLength: 16,
+        mine: 99
       }
     };
     this.mine = null;
     this.isClick = true;
     this.openGrid = 0;
+    this.signMine = 0;
   }
 
   componentWillMount () {
-    this.initMinePosition()
+    this.initData( this.props );
+  }
+
+  componentWillReceiveProps ( nextProps ) {
+    if ( this.props.level !== nextProps.level ) {
+      this.initData( nextProps );
+    }
+  }
+
+  initData ( props ) {
+    const { level } = props;
+    const { type } = this.state;
+    if ( level !== type ) {
+      this.setState( { type: level }, () => {
+        this.initMinePosition()
+      } );
+    } else {
+      this.initMinePosition()
+    }
   }
 
   initMinePosition () {
+    const { onChange } = this.props;
     const { type } = this.state;
     const { mine } = this.type[ type ];
+    onChange && onChange( mine );
     this.mine = new Set();
     while ( this.mine.size !== mine ) {
       let value = this.random();
@@ -80,17 +113,19 @@ class Panel extends Component {
     const { xLength, yLength } = this.type[ type ];
     let i = Math.floor( Math.random() * xLength );
     let j = Math.floor( Math.random() * yLength );
-    return i * 10 + j;
+    return this.getGridIndex( i, j );
   }
 
   handleClick ( x, y, index ) {
+    const { onChange } = this.props;
     const { cache, type } = this.state;
+    const { xLength, yLength, mine } = this.type[ type ];
     if ( cache.has( index ) || !this.isClick ) return false;
     if ( this.searchGrid( index ) ) {
       this.isClick = false;
-      cache.set( index, -1 );
+      this.mine.forEach( i => cache.set( i, -1 ) );
       this.setState( { cache } );
-      alert( '输了' )
+      this.message( 'error', '输了' );
     } else {
       this.openGrid++;
       let roundMine = 0;
@@ -98,23 +133,63 @@ class Panel extends Component {
       let keyList = Object.keys( roundGridList );
       keyList.map( ( key ) => {
         let round = roundGridList[ key ];
-        if ( this.searchGrid( round[ 0 ] * 10 + round[ 1 ] ) ) roundMine++;
+        if ( this.searchGrid( this.getGridIndex( round[ 0 ], round[ 1 ] ) ) ) roundMine++;
       } );
       cache.set( index, roundMine );
+      if ( this.openGrid === xLength * yLength - mine ) {
+        this.isClick = false;
+        this.message( 'success', '赢了' );
+        this.mine.forEach( i => cache.set( i, -2 ) );
+        this.signMine = this.mine.size;
+        this.changeMine();
+      }
       this.setState( { cache }, () => {
-        const { xLength, yLength, mine } = this.type[ type ];
-        if ( this.openGrid === xLength * yLength - mine ) {
-          alert( '赢了' )
-        } else {
-          if ( roundMine === 0 ) {
-            keyList.map( ( key ) => {
-              let round = roundGridList[ key ];
-              this.handleClick( round[ 0 ], round[ 1 ], round[ 0 ] * 10 + round[ 1 ] );
-            } );
-          }
+        if ( roundMine === 0 ) {
+          keyList.map( ( key ) => {
+            let round = roundGridList[ key ];
+            this.handleClick( round[ 0 ], round[ 1 ], this.getGridIndex( round[ 0 ], round[ 1 ] ) );
+          } );
         }
       } );
     }
+  }
+
+  changeMine () {
+    const { onChange } = this.props;
+    onChange && onChange( this.mine.size - this.signMine );
+  }
+
+  handleMouseUp ( x, y, index, e ) {
+    const { cache } = this.state;
+    if ( e.button !== 1 && !cache.has( index ) ) return false;
+    let mine = cache.get( index );
+    if ( mine < 1 ) return false;
+    let roundGridList = this.findRoundGrid( x, y );
+    let keyList = Object.keys( roundGridList );
+    let isMine = false;
+    for ( let i = 0; i < keyList.length; i++ ) {
+      let round = roundGridList[ keyList[ i ] ];
+      let roundIndex = this.getGridIndex( round[ 0 ], round[ 1 ] );
+      if ( !cache.has( roundIndex ) && this.searchGrid( roundIndex ) ) {
+        isMine = true;
+        break;
+      }
+    }
+    if ( isMine ) {
+      return false;
+    } else {
+      keyList.map( ( key ) => {
+        let round = roundGridList[ key ];
+        this.handleClick( round[ 0 ], round[ 1 ], this.getGridIndex( round[ 0 ], round[ 1 ] ) );
+      } );
+    }
+  }
+
+  message ( type, message ) {
+    Message( {
+      message: message,
+      type: type
+    } );
   }
 
   /**
@@ -122,6 +197,10 @@ class Panel extends Component {
    * */
   searchGrid ( index ) {
     return this.mine.has( index );
+  }
+
+  getGridIndex ( x, y ) {
+    return `${ x }-${ y }`;
   }
 
   findRoundGrid ( x, y ) {
@@ -158,12 +237,17 @@ class Panel extends Component {
   handleContextMenu ( index, e ) {
     e.preventDefault();
     if ( !this.isClick ) return false;
+    const { onChange } = this.props;
     const { cache } = this.state;
     if ( !cache.has( index ) ) {
+      this.signMine++;
+      this.changeMine();
       cache.set( index, -2 );
     } else {
       let code = cache.get( index );
       if ( code === -2 ) {
+        this.signMine--;
+        this.changeMine();
         cache.set( index, -3 );
       } else if ( code === -3 ) {
         cache.delete( index );
@@ -184,12 +268,13 @@ class Panel extends Component {
             <div className='row' key={ j }>
               {
                 ( new Array( xLength ) ).fill( 0 ).map( ( item, i ) => {
-                  let index = i * 10 + j;
+                  let index = this.getGridIndex( i, j );
                   return (
                     <MineItem
                       key={ index }
                       onClick={ this.handleClick.bind( this, i, j, index ) }
                       onContextMenu={ this.handleContextMenu.bind( this, index ) }
+                      onMouseUp={ this.handleMouseUp.bind( this, i, j, index ) }
                       status={ cache.get( index ) }
                     />
                   )
