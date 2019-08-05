@@ -159,8 +159,9 @@ class Panel extends Component {
   }
 
   handleMouseUp ( x, y, index, e ) {
+	  e.preventDefault();
     const { cache } = this.state;
-    if ( e.button !== 1 && !cache.has( index ) ) return false;
+    if ( e.button !== 1 || !cache.has( index ) ) return false;
     let mine = cache.get( index );
     if ( mine < 1 ) return false;
     let roundGridList = this.findRoundGrid( x, y );
