@@ -117,7 +117,6 @@ class Panel extends Component {
   }
 
   handleClick ( x, y, index ) {
-    const { onChange } = this.props;
     const { cache, type } = this.state;
     const { xLength, yLength, mine } = this.type[ type ];
     if ( cache.has( index ) || !this.isClick ) return false;
@@ -237,9 +236,8 @@ class Panel extends Component {
   handleContextMenu ( index, e ) {
     e.preventDefault();
     if ( !this.isClick ) return false;
-    const { onChange } = this.props;
     const { cache } = this.state;
-    if ( !cache.has( index ) ) {
+    if ( !cache.has( index ) && this.signMine < this.mine.size ) {
       this.signMine++;
       this.changeMine();
       cache.set( index, -2 );
