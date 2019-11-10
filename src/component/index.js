@@ -1,4 +1,4 @@
-import Head from './head.jsx';
+import Top from './top.jsx';
 import Left from './left.jsx';
 import Main from './main.jsx';
 import RouteWithSubRoutes from './routeWithSubRoutes.jsx';
@@ -10,8 +10,8 @@ import PlayList from './qqMusic/playList.jsx';
 
 import MineSweepingPanel from './mineSweeping/panel';
 
-export { 
-  Head, 
+export {
+  Top,
   Left, 
   Main, 
   RouteWithSubRoutes ,

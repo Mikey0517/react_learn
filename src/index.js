@@ -8,4 +8,4 @@ import './assets/css/common.css';
 ReactDom.render( 
   <App />,
   document.querySelector( '#root' )
-)
+);

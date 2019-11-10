@@ -70,9 +70,14 @@ class Panel extends Component {
     this.isClick = true;
     this.openGrid = 0;
     this.signMine = 0;
+    this.trigger = {
+      reset: this.handleReset.bind( this )
+    }
   }
 
   componentWillMount () {
+    const { trigger } = this.props;
+    trigger && trigger( this.trigger );
     this.initData( this.props );
   }
 
@@ -86,7 +91,7 @@ class Panel extends Component {
     const { level } = props;
     const { type } = this.state;
     if ( level !== type ) {
-      this.setState( { type: level }, () => {
+      this.setState( { type: level, cache: new Map() }, () => {
         this.initMinePosition()
       } );
     } else {
@@ -99,10 +104,25 @@ class Panel extends Component {
     const { type } = this.state;
     const { mine } = this.type[ type ];
     onChange && onChange( mine );
+
+    this.isClick = true;
+    this.openGrid = 0;
+    this.signMine = 0;
     this.mine = new Set();
+  }
+
+  handleReset () {
+    this.setState( { cache: new Map() }, () => {
+      this.initMinePosition()
+    } )
+  }
+
+  generateMine ( index ) {
+    const { type } = this.state;
+    const { mine } = this.type[ type ];
     while ( this.mine.size !== mine ) {
       let value = this.random();
-      if ( !this.mine.has( value ) ) {
+      if ( !this.mine.has( value ) && value !== index ) {
         this.mine.add( value );
       }
     }
@@ -117,6 +137,7 @@ class Panel extends Component {
   }
 
   handleClick ( x, y, index ) {
+    if ( this.openGrid === 0 ) this.generateMine();
     const { cache, type } = this.state;
     const { xLength, yLength, mine } = this.type[ type ];
     if ( cache.has( index ) || !this.isClick ) return false;
@@ -187,8 +208,10 @@ class Panel extends Component {
 
   message ( type, message ) {
     Message( {
+      customClass: '',
       message: message,
-      type: type
+      type: type,
+      duration: 0
     } );
   }
 

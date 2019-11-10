@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import routes from '../router';
 
@@ -12,7 +12,7 @@ class RouteWithSubRoutes extends Component {
         forceRefresh={ !supportsHistory }
         keyLength={ 12 }
       >
-        <div>
+        <Fragment>
           {
             routes.map( ( route, index ) => (
               <Route
@@ -23,7 +23,7 @@ class RouteWithSubRoutes extends Component {
               />
             ) )
           }
-        </div>
+        </Fragment>
       </BrowserRouter>
     )
   }

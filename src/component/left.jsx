@@ -69,11 +69,9 @@ class Left extends Component {
   render () {
     const { index } = this.state;
     return (
-      <div className="x-menu">
-        <Menu defaultActive={ index }>
-          { this.renderMenu( menuConfig.menu ) }
-        </Menu>
-      </div>
+      <Menu defaultActive={ index }>
+        { this.renderMenu( menuConfig.menu ) }
+      </Menu>
     )
   }
 }
