@@ -10,6 +10,8 @@ import PlayList from './qqMusic/playList.jsx';
 
 import MineSweepingPanel from './mineSweeping/panel';
 
+import Tetris from './tetris/tetris';
+
 export {
   Top,
   Left, 
@@ -19,5 +21,6 @@ export {
   MusicMain,
   PlayMusic,
   PlayList,
-  MineSweepingPanel
+  MineSweepingPanel,
+  Tetris
 };

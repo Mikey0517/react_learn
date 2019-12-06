@@ -1,0 +1,1 @@
+import React, { Component } from 'react';import DefaultLayout from "../layout/defaultLayout";import { Tetris } from '../component'class TetrisPage extends Component {	render () {		return (			<DefaultLayout { ...this.props }>				<Tetris />			</DefaultLayout>		)	}}export default TetrisPage;
