@@ -17,6 +17,10 @@ export default {
       {
         title: '俄罗斯方块',
         url: '/tetrisPage'
-      }
+      },
+			{
+				title: '坦克大战',
+				url: '/tankBattle'
+			}
 		]
 }

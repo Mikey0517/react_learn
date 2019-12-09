@@ -12,6 +12,8 @@ import MineSweepingPanel from './mineSweeping/panel';
 
 import Tetris from './tetris/tetris';
 
+import TankBattle from './tankBattle/tankBattle'
+
 export {
   Top,
   Left, 
@@ -22,5 +24,6 @@ export {
   PlayMusic,
   PlayList,
   MineSweepingPanel,
-  Tetris
+  Tetris,
+  TankBattle
 };

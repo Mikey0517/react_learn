@@ -2,6 +2,7 @@ import Music from '../page/music';
 import Chat from '../page/chat';
 import MineSweeping from '../page/mineSweeping';
 import TetrisPage from '../page/tetrisPage';
+import TankBattlePage from  '../page/tankBattlePage'
 
 const router = [
 	{
@@ -24,7 +25,11 @@ const router = [
   {
     path: '/tetrisPage',
     component: TetrisPage
-  }
+  },
+	{
+		path: '/tankBattlePage',
+		component: TankBattlePage
+	}
 ];
 
 export default router;
