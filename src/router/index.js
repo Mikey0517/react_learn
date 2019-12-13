@@ -27,7 +27,7 @@ const router = [
     component: TetrisPage
   },
 	{
-		path: '/tankBattlePage',
+		path: '/tankBattle',
 		component: TankBattlePage
 	}
 ];

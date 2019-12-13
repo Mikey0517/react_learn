@@ -1,0 +1,1 @@
+import map1 from "./map1";export default [	{		name: 'map1',		value: map1	},	{		name: 'map1',		value: map1	},	{		name: 'map1',		value: map1	}]
