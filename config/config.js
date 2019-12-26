@@ -8,6 +8,10 @@ module.exports = {
         target: "https://c.y.qq.com",
         secure: false
       },
+      "/play": {
+        target: "http://localhost:8888",
+        secure: false
+      },
     }
   },
   build: {

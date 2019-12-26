@@ -1,3 +1,4 @@
+import Login from '../page/login';
 import Music from '../page/music';
 import Chat from '../page/chat';
 import MineSweeping from '../page/mineSweeping';
@@ -9,6 +10,10 @@ const router = [
 		path: '/',
 		component: Music,
 		exact: true
+	},
+	{
+		path: '/login',
+		component: Login,
 	},
 	{
 		path: '/music',
