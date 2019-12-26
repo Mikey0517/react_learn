@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Carousel, Button } from 'element-react';
+import { uuid } from '../../common';
 import '../../assets/css/tankBattle.css';
 import maps from '../../common/tankBattleMap';
 
@@ -118,8 +119,23 @@ class Gaming extends Component {
 		super( props );
 	}
 
-	componentWillMount () {
-		console.log( 11 )
+	render () {
+		const { mapConfig, isDouble } = this.props;
+		return (
+			<div className='gaming'>
+				<Panel
+					mapConfig={ mapConfig }
+					isDouble={ true }
+				/>
+			</div>
+		)
+	}
+}
+
+class Panel extends Component {
+	constructor ( props ) {
+		super( props );
+		this.handleCheckMove = this.handleCheckMove.bind( this );
 	}
 
 	handleCheckMove ( position, after ) {
@@ -223,24 +239,6 @@ class Gaming extends Component {
 
 	render () {
 		const { mapConfig, isDouble } = this.props;
-		return (
-			<div className='gaming'>
-				<MapPanel
-					mapConfig={ mapConfig }
-				/>
-				<TankPanel
-					mapConfig={ mapConfig }
-					isDouble={ isDouble }
-					onTankMove={ this.handleCheckMove.bind( this ) }
-				/>
-			</div>
-		)
-	}
-}
-
-class MapPanel extends Component {
-	render () {
-		const { mapConfig } = this.props;
 		const { size, map, base } = mapConfig;
 		let defaultBase = {
 			x: Math.floor( size.x / 2 ),
@@ -292,41 +290,58 @@ class MapPanel extends Component {
 						)
 					} )
 				}
+				<Tank
+					className='tank-one'
+					auto={ false }
+					keyMap={ [ 87, 68, 83, 65 ] }
+					onTankMove={ this.handleCheckMove }
+				/>
+				{
+					isDouble
+						? <Tank
+								className='tank-two'
+								position={ [ 480, 720 ] }
+								auto={ false }
+								keyMap={ [ 38, 39, 40, 37 ] }
+								onTankMove={ this.handleCheckMove }
+							/>
+						: null
+				}
 			</div>
 		)
 	}
 }
 
-class TankPanel extends Component {
+class Tank extends Component {
 	constructor ( props ) {
 		super( props );
 		this.state = {
-			p1: {
+			tank: {
 				left: 240,
-				top: 720,
-				deg: 0,
-				time: 0,
-				direction: 'up'
-			},
-			p2: {
-				left: 480,
 				top: 720,
 				deg: 0,
 				time: 0,
 				direction: 'up'
 			}
 		};
-		// 键盘监听事件响应方法
+		this.id = uuid();
+		this.keyMap = [ 87, 68, 83, 65 ];
+		this.dictionary = {
+			deg: {
+				up: 0,
+				left: 270,
+				right: 90,
+				down: 180
+			}
+		};
 		this.handleKeydown = this.handleKeydown.bind( this );
 	}
 
 	componentWillMount () {
-		const { mapConfig } = this.props;
-		const { p1, p2 } = mapConfig;
-		let state = {};
-		if ( p1 ) state.p1 = p1;
-		if ( p2 ) state.p2 = p2;
-		this.setState( state );
+		this.initTank();
+	}
+
+	componentDidMount () {
 		document.addEventListener( 'keydown', this.throttle( this.handleKeydown, 300 ) );
 	}
 
@@ -334,8 +349,22 @@ class TankPanel extends Component {
 		document.removeEventListener( 'keydown', this.throttle( this.handleKeydown, 300 ) );
 	}
 
-	handleKeydown ( e ) {
-		this.controllerTank( e.keyCode );
+	initTank () {
+		const { position, direction, keyMap } = this.props;
+		let tank = null;
+		if ( position !== void 0 ) {
+			tank = {
+				left: position[ 0 ],
+				top: position[ 1 ]
+			};
+		}
+		if ( direction !== void 0 ) {
+			if ( !tank ) tank = {};
+			tank.direction = direction;
+			tank.deg = this.dictionary.deg[ direction ];
+		}
+		if ( keyMap !== void 0 ) this.keyMap = keyMap;
+		if ( tank ) this.setState( { tank } );
 	}
 
 	throttle ( callback, gapTime ) {
@@ -349,89 +378,79 @@ class TankPanel extends Component {
 		}
 	}
 
+	handleKeydown ( e ) {
+		console.log( e.keyCode );
+		this.controllerTank( e.keyCode );
+	}
+
 	controllerTank ( code ) {
-		const { p1 } = this.state;
+		const { tank } = this.state;
 		const { onTankMove } = this.props;
-		let _p1 = Object.assign( {}, p1 );
-		let deg = _p1.deg % 360;
+		let _tank = Object.assign( {}, tank );
+		let deg = _tank.deg % 360;
 		deg = Math.abs( deg === -90 ? 270 : deg === -270 ? 90 : deg );
 		let numArr = [];
 		switch ( code ) {
 			// up
-			case 87:
+			case this.keyMap[ 0 ]:
 				numArr = [ 0, 180, 90, 'top', -30, 'up' ];
 				break;
 			// right
-			case 68:
+			case this.keyMap[ 1 ]:
 				numArr = [ 90, 270, 180, 'left', 30, 'right' ];
 				break;
 			// down
-			case 83:
+			case this.keyMap[ 2 ]:
 				numArr = [ 180, 0, 270, 'top', 30, 'down' ];
 				break;
 			// left
-			case 65:
+			case this.keyMap[ 3 ]:
 				numArr = [ 270, 90, 0, 'left', -30, 'left' ];
 				break;
 		}
-		if ( [ 87, 68, 83, 65 ].includes( code ) ) {
-			_p1.direction = numArr[ 5 ];
+		if ( this.keyMap.includes( code ) ) {
+			_tank.direction = numArr[ 5 ];
 			if ( deg === numArr[ 0 ] ) {
-				_p1.time = 300;
-				_p1[ numArr[ 3 ] ] += numArr[ 4 ];
-				onTankMove( _p1, check => {
-					if ( check ) this.setState( { p1: _p1 } );
+				_tank.time = 300;
+				_tank[ numArr[ 3 ] ] += numArr[ 4 ];
+				onTankMove( _tank, check => {
+					if ( check ) this.setState( { tank: _tank } );
 				} );
 			} else {
-				_p1.time = 300;
+				_tank.time = 300;
 				if ( deg === numArr[ 1 ] ) {
-					if ( _p1.deg > 0 ) {
-						_p1.deg -= 180;
+					if ( _tank.deg > 0 ) {
+						_tank.deg -= 180;
 					} else {
-						_p1.deg += 180;
+						_tank.deg += 180;
 					}
 				} else {
 					if ( deg === numArr[ 2 ] ) {
-						_p1.deg -= 90;
+						_tank.deg -= 90;
 					} else {
-						_p1.deg += 90;
+						_tank.deg += 90;
 					}
 				}
-				this.setState( { p1: _p1 } );
+				this.setState( { tank: _tank } );
 			}
 		}
 	}
 
 	render () {
-		const { isDouble } = this.props;
-		const { p1, p2 } = this.state;
-		let tankOneStyle = {
-			left: `${ p1.left }px`,
-			top: `${ p1.top }px`,
-			transform: `rotate(${ p1.deg ? p1.deg : 0 }deg)`,
-			transitionDuration: `${ p1.time }ms`
-		};
-		let tankTwoStyle = {
-			left: `${ p2.left }px`,
-			top: `${ p2.top }px`,
-			transform: `rotate(${ p2.deg ? p2.deg : 0 }deg)`,
-			transitionDuration: `${ p1.time }ms`
+		const { tank } = this.state;
+		const { className } = this.props;
+		let tankStyle = {
+			left: `${ tank.left }px`,
+			top: `${ tank.top }px`,
+			transform: `rotate(${ tank.deg ? tank.deg : 0 }deg)`,
+			transitionDuration: `${ tank.time }ms`
 		};
 		return (
-			<div className='panel'>
-				<div
-					className='tank-one'
-					style={ tankOneStyle }
-				/>
-				{
-					isDouble
-						? <div
-							className='tank-two'
-							style={ tankTwoStyle }
-						/>
-						: null
-				}
-			</div>
+			<div
+				id={ this.id }
+				className={ `tank ${ className }` }
+				style={ tankStyle }
+			/>
 		)
 	}
 }
