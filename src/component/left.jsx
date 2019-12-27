@@ -12,8 +12,12 @@ class Left extends Component {
   }
 
   componentWillMount () {
-    const { location } = this.props;
-    this.setState( { index: this.getActiveIndex( location.pathname, menuConfig.menu, '' ) } );
+    let pathname = window.location.pathname;
+    if ( pathname !== '/' ) this.setState( { index: this.getActiveIndex( pathname, menuConfig.menu, '' ) } );
+  }
+
+  shouldComponentUpdate ( nextProps, nextState, nextContext ) {
+    return false;
   }
 
   getActiveIndex ( url, menu, key ) {

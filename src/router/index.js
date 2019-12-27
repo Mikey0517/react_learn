@@ -1,3 +1,4 @@
+import DefaultLayout from '../layout/defaultLayout';
 import Login from '../page/login';
 import Music from '../page/music';
 import Chat from '../page/chat';
@@ -7,33 +8,40 @@ import TankBattlePage from  '../page/tankBattlePage'
 
 const router = [
 	{
-		path: '/',
-		component: Music,
-		exact: true
-	},
-	{
 		path: '/login',
+		exact: true,
 		component: Login,
 	},
 	{
-		path: '/music',
-		component: Music
-	},
-	{
-		path: '/chat',
-		component: Chat
-	},
-	{
-		path: '/mineSweeping',
-		component: MineSweeping
-	},
-  {
-    path: '/tetrisPage',
-    component: TetrisPage
-  },
-	{
-		path: '/tankBattle',
-		component: TankBattlePage
+		path: '/',
+		component: DefaultLayout,
+		children: [
+			{
+				path: '/',
+				exact: true,
+				component: Music,
+			},
+			{
+				path: '/music',
+				component: Music,
+			},
+			{
+				path: '/chat',
+				component: Chat
+			},
+			{
+				path: '/mineSweeping',
+				component: MineSweeping
+			},
+			{
+				path: '/tetrisPage',
+				component: TetrisPage
+			},
+			{
+				path: '/tankBattle',
+				component: TankBattlePage
+			}
+		]
 	}
 ];
 
