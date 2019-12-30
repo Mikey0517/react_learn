@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Tag, Pagination } from 'element-react';
-import { $fetch, isEqual, sendEvent, eventListener } from '../../common';
+import { $musicFetch, isEqual, sendEvent, eventListener } from '../../common';
 import MusicImg from './musicImg.jsx';
 
 let url = {
@@ -46,7 +46,7 @@ class MusicList extends Component {
       song_begin: pageIndex * pageSize,
       song_num: pageSize
     };
-    $fetch( url.fcg_v8_toplist_cp, 'POST', body, ( data ) => {
+    $musicFetch( url.fcg_v8_toplist_cp, 'POST', body, ( data ) => {
       if ( this._isMounted ) {
         this.setState( { data } )
       }

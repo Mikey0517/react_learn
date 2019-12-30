@@ -15,9 +15,9 @@ class App extends PureComponent {
 								<Route
 									key={ index }
 									path={ route.path }
-									render={ () => {
+									render={ props => {
 										return (
-											<route.component>
+											<route.component { ...props }>
 												{ this.recursiveRoute( route.children ) }
 											</route.component>
 										)
@@ -30,17 +30,29 @@ class App extends PureComponent {
 									path={ route.path }
 									render={ props => {
 										let token = localStorage.getItem( 'token' );
-										if ( token || route.path === '/login' ) {
-											return <route.component { ...props } />
+										if ( token ) {
+											if ( route.path === '/login' ) {
+												return (
+													<Redirect
+														to={ props.location.state.from }
+													/>
+												)
+											} else {
+												return <route.component { ...props } />
+											}
 										} else {
-											return (
-												<Redirect
-													to={ {
-														pathname: '/login',
-														state: { from: props.location }
-													} }
-												/>
-											)
+											if ( route.path === '/login' ) {
+												return <route.component { ...props } />
+											} else {
+												return (
+													<Redirect
+														to={ {
+															pathname: '/login',
+															state: { from: props.location }
+														} }
+													/>
+												)
+											}
 										}
 									} }
 								/>

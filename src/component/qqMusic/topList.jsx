@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { $fetch, sendEvent, eventListener } from '../../common';
+import { $musicFetch, sendEvent, eventListener } from '../../common';
 
 class TopList extends Component {
   constructor ( props ) {
@@ -30,7 +30,7 @@ class TopList extends Component {
       notice: 0,
       needNewCode: 1,
     };
-    $fetch( url, 'POST', body, ( data ) => {
+    $musicFetch( url, 'POST', body, ( data ) => {
       if ( this._isMounted ) {
         this.setState( { topList: data.data.topList }, () => {
           const { topList, index } = this.state;

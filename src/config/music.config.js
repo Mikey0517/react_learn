@@ -1,0 +1,1 @@
+export default {	inCharset: 'utf-8',	outCharset: 'utf-8',	format: 'json',	uin: 0,	platform: 'h5'};
