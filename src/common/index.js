@@ -4,7 +4,7 @@ import musicConfig from "../config/music.config";
 
 const $fetch = ( url, method, body, callback, callbackType ) => {
   fetch( url, {
-    ...fetchConfig,
+    ...fetchConfig(),
     method: method,
     body: body ? JSON.stringify( body ) : null
   } )
@@ -30,7 +30,11 @@ const $fetch = ( url, method, body, callback, callbackType ) => {
       }
     } )
     .then( data => {
-      callback( data );
+      if ( data.status !== -2 ) {
+        callback( data );
+      } else {
+        loginOut();
+      }
     } );
 };
 
@@ -60,7 +64,7 @@ const $musicFetch = ( url, method, body, callback ) => {
     .then( data => {
       callback( data );
     } );
-}
+};
 
 const parseParam = ( param, key ) => {
   let paramStr = "";
@@ -105,17 +109,22 @@ const isEqual = ( a, b ) => {
 
 const sendEvent = ( key, param ) => {
   pubsub.publish( key, param )
-}
+};
 
 const eventListener = ( key, callback ) => {
   pubsub.subscribe( key, callback )
-}
+};
 
 const uuid = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, ( c ) => {
     let r = Math.random() * 16 | 0, v = c === 'x' ? r : ( r&0x3|0x8 );
     return v.toString( 16 );
   });
-}
+};
 
-export { $fetch, $musicFetch, isEqual, sendEvent, eventListener, uuid };
+const loginOut = () => {
+  window.localStorage.removeItem( "token" );
+  window.open( '/login', '_self' )
+};
+
+export { $fetch, $musicFetch, isEqual, sendEvent, eventListener, uuid, loginOut };

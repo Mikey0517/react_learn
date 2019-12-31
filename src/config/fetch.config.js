@@ -1,1 +1,1 @@
-export default {	headers: {		'Content-Type': 'application/json',		'Authorization': localStorage.getItem( 'token' )	},}
+export default () => {	return {		headers: {			'Content-Type': 'application/json',			'token': localStorage.getItem( 'token' )		}	}}

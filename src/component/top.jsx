@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'element-react';
-import { $fetch } from "../common";
+import { $fetch, loginOut } from "../common";
 import defaultAvatar from '../assets/image/login/defaultAvatar.jpg';
 
 class Top extends Component {
@@ -16,8 +16,10 @@ class Top extends Component {
   }
 
   initData () {
-	  $fetch( `/play/user?userId=${ 1 }`, 'GET', null, data => {
-	  	console.log( data )
+	  $fetch( `/play/user`, 'GET', null, data => {
+	  	if ( data.status === 0 ) {
+	  		this.setState( { user: data.data } );
+		  }
 	  } )
   }
 
@@ -26,8 +28,7 @@ class Top extends Component {
       case 'userInfo':
         break;
       case 'loginOut':
-        localStorage.removeItem( 'token' );
-        this.props.history.push( '/login' );
+	      loginOut();
         break
     }
   }
@@ -52,7 +53,7 @@ class Top extends Component {
 						</Dropdown>
 					</div>
           <div className='user-info'>
-            欢迎您，{ user ? user.username : '' }
+            欢迎您，{ user ? user.userName : '' }
           </div>
 				</div>
 			</div>

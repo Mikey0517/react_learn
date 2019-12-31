@@ -335,6 +335,7 @@ class Tank extends Component {
 			}
 		};
 		this.handleKeydown = this.handleKeydown.bind( this );
+		this.throttleFun = null;
 	}
 
 	componentWillMount () {
@@ -346,7 +347,7 @@ class Tank extends Component {
 	}
 
 	componentWillUnmount () {
-		document.removeEventListener( 'keydown', this.throttle( this.handleKeydown, 300 ) );
+		document.removeEventListener( 'keydown', this.throttleFun );
 	}
 
 	initTank () {
@@ -369,13 +370,14 @@ class Tank extends Component {
 
 	throttle ( callback, gapTime ) {
 		let lastTime = null;
-		return function () {
+		this.throttleFun = function () {
 			let nowTime = +new Date();
 			if ( nowTime - lastTime > gapTime || !lastTime ) {
 				callback( ...arguments );
 				lastTime = nowTime
 			}
-		}
+		};
+		return this.throttleFun;
 	}
 
 	handleKeydown ( e ) {

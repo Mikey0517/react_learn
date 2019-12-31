@@ -1,7 +1,7 @@
 import DefaultLayout from '../layout/defaultLayout';
 import Login from '../page/login';
 import Music from '../page/music';
-import Chat from '../page/chat';
+import Backgammon from '../page/backgammon';
 import MineSweeping from '../page/mineSweeping';
 import TetrisPage from '../page/tetrisPage';
 import TankBattlePage from  '../page/tankBattlePage'
@@ -26,8 +26,8 @@ const router = [
 				component: Music,
 			},
 			{
-				path: '/chat',
-				component: Chat
+				path: '/backgammon',
+				component: Backgammon
 			},
 			{
 				path: '/mineSweeping',

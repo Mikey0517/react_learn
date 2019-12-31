@@ -7,8 +7,8 @@ export default {
 				url: '/music'
 			},
 			{
-				title: '匿名聊天',
-				url: '/chat'
+				title: '五子棋',
+				url: '/backgammon'
 			},
 			{
 				title: '扫雷',
