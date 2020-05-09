@@ -87,6 +87,9 @@ class Panel extends Component {
     }
   }
 
+  /**
+   * 初始化或切换难度
+   * */
   initData ( props ) {
     const { level } = props;
     const { type } = this.state;
@@ -99,6 +102,9 @@ class Panel extends Component {
     }
   }
 
+  /**
+   * 初始化
+   * */
   initMinePosition () {
     const { onChange } = this.props;
     const { type } = this.state;
@@ -111,12 +117,18 @@ class Panel extends Component {
     this.mine = new Set();
   }
 
+  /**
+   * 重置
+   * */
   handleReset () {
     this.setState( { cache: new Map() }, () => {
       this.initMinePosition()
     } )
   }
 
+  /**
+   * 生成雷
+   * */
   generateMine ( index ) {
     const { type } = this.state;
     const { mine } = this.type[ type ];
@@ -128,6 +140,9 @@ class Panel extends Component {
     }
   }
 
+  /**
+   * 随机生成位置
+   * */
   random () {
     const { type } = this.state;
     const { xLength, yLength } = this.type[ type ];
@@ -136,8 +151,11 @@ class Panel extends Component {
     return this.getGridIndex( i, j );
   }
 
+  /**
+   * 点击事件
+   * */
   handleClick ( x, y, index ) {
-    if ( this.openGrid === 0 ) this.generateMine();
+    if ( this.openGrid === 0 ) this.generateMine( index );
     const { cache, type } = this.state;
     const { xLength, yLength, mine } = this.type[ type ];
     if ( cache.has( index ) || !this.isClick ) return false;
@@ -174,11 +192,17 @@ class Panel extends Component {
     }
   }
 
+  /**
+   * 标记雷change
+   * */
   changeMine () {
     const { onChange } = this.props;
     onChange && onChange( this.mine.size - this.signMine );
   }
 
+  /**
+   * 鼠标滚轮点击事件
+   * */
   handleMouseUp ( x, y, index, e ) {
 	  e.preventDefault();
     const { cache } = this.state;
@@ -206,6 +230,9 @@ class Panel extends Component {
     }
   }
 
+  /**
+   * 提示信息公共方法
+   * */
   message ( type, message ) {
     Message( {
       customClass: '',
@@ -222,10 +249,16 @@ class Panel extends Component {
     return this.mine.has( index );
   }
 
+  /**
+   * 坐标转换字符串
+   * */
   getGridIndex ( x, y ) {
     return `${ x }-${ y }`;
   }
 
+  /**
+   * 返回周围的格子
+   * */
   findRoundGrid ( x, y ) {
     const { type } = this.state;
     const { xLength, yLength } = this.type[ type ];
@@ -257,6 +290,9 @@ class Panel extends Component {
     return roundGridList;
   }
 
+  /**
+   * 鼠标右键点击事件
+   * */
   handleContextMenu ( index, e ) {
     e.preventDefault();
     if ( !this.isClick ) return false;
